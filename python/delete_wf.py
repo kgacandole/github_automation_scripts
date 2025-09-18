@@ -29,7 +29,7 @@ while getListofRuns['workflow_runs'] != []:
 
             if wfName in wfPath:
                  try:
-                     deleteUrl = "https://api.github.com/repos/LouisVuitton/" + repoName + "/actions/runs/" + runId
+                     deleteUrl = "https://api.github.com/repos/" + repoOwner + "/" + repoName + "/actions/runs/" + runId
                      deleteRun = requests.delete(deleteUrl, headers = ghHeaders)
                      print("Deleted ", runId, " : ", deleteRun)
                  except Exception as e:
