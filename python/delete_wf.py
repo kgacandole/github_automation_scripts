@@ -14,20 +14,18 @@ ghHeaders = {
 pageCounter = 1
 save_build = [] # List workflow IDs to be skipped
 
-repoUrl = "https://api.github.com/repos/" + repoOwner "/" + repoName + "/actions/runs?page=" + str(pageCounter)
-getListofRuns = requests.get(repoUrl, headers = ghHeaders).json()
-print("Found total of ", getListofRuns['total_count'], " workflow runs.")
+getListofRuns = requests.get("https://api.github.com/repos/" + repoOwner + "/" + repoName + "/actions/runs?page=" + str(pageCounter), headers = ghHeaders).json()
 
 while getListofRuns['workflow_runs'] != []:
-    print("Querying page " + str(pageCounter))
+    print("Querying page # " + str(pageCounter), " | Total of ", getListofRuns['total_count'], " workflow runs.")
     for runs in getListofRuns['workflow_runs']:
         runId = str(runs['id'])
         if(runId in save_build):
             print("Skipping ", runId)
         else:
-            wfPath = runs['path']
-
+            wfPath = runs['path']            
             if wfName in wfPath:
+                 print(runs['path'])
                  try:
                      deleteUrl = "https://api.github.com/repos/" + repoOwner + "/" + repoName + "/actions/runs/" + runId
                      deleteRun = requests.delete(deleteUrl, headers = ghHeaders)
@@ -36,4 +34,4 @@ while getListofRuns['workflow_runs'] != []:
                      print("Error deleting ", runId, " : ", e)
  
     pageCounter = pageCounter + 1
-    getListofRuns = requests.get(repoUrl, headers = ghHeaders).json()
+    getListofRuns = requests.get("https://api.github.com/repos/" + repoOwner + "/" + repoName + "/actions/runs?page=" + str(pageCounter), headers = ghHeaders).json()
