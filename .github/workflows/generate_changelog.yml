@@ -35,4 +35,6 @@ jobs:
 
     - name: Generate Changelog
       shell: bash
-      run: python scripts/python/generate_changelog.py ${{ inputs.OWNER_NAME }} ${{ inputs.REPOSITORY_NAME }}
+      run: |
+        python scripts/python/generate_changelog.py ${{ inputs.OWNER_NAME }} ${{ inputs.REPOSITORY_NAME }}
+        cat CHANGELOG.md
