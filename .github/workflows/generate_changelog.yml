@@ -37,4 +37,9 @@ jobs:
       shell: bash
       run: |
         python scripts/python/generate_changelog.py ${{ inputs.OWNER_NAME }} ${{ inputs.REPOSITORY_NAME }}
-        cat CHANGELOG.md
+    
+    - name: Upload Changelog
+      uses: actions/upload-artifact@v4
+      with:
+        name: "changelog_file"
+        path: "CHANGELOG.md"
