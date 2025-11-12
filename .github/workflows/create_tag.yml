@@ -1,0 +1,46 @@
+name: Create Tag
+run-name: Create Tag
+on:
+  workflow_dispatch:
+    inputs:
+      OWNER_NAME:
+        description: 'Owner Name'
+        type: string
+        required: true
+      REPOSITORY_NAME:
+        description: 'Repository Name'
+        type: string
+        required: true
+      BRANCH_NAME:
+        description: 'Branch Name'
+        required: true
+      TAG_NAME:
+        description: 'Tag Name'
+        required: true
+
+jobs:
+  create-tag:
+    name: Create Repository Tag
+    runs-on: [ubuntu-latest]
+    env:
+      GH_TOKEN: ${{ secrets.GH_TOKEN }}
+    steps:
+    - name: Create Repository Tag
+      uses: actions/github-script@v7
+      with:
+        github-token: ${{ env.GH_TOKEN }}
+        script: |
+          // Get Branch Sha
+          ref = await github.rest.git.getRef({
+              owner: "${{ inputs.OWNER_NAME }}",
+              repo: "${{ inputs.REPOSITORY_NAME }}",
+              ref: "heads/${{ inputs.BRANCH_NAME }}"
+          });
+
+          // Create Tag
+          await github.rest.git.createRef({
+              owner: '${{ inputs.OWNER_NAME }}',
+              repo: '${{ inputs.REPOSITORY_NAME }}',
+              ref: 'refs/tags/${{ inputs.TAG_NAME }}',
+              sha: ref.data.object.sha
+          })
