@@ -29,7 +29,7 @@ runs:
     id: create-repo-vars
     uses: fjogeleit/http-request-action@v1
     with:
-      url: repos/${{ inputs.owner }}/${{ inputs.repository_name }}/actions/variables
+      url: https://api.github.com/repos/${{ inputs.owner }}/${{ inputs.repository_name }}/actions/variables
       method: POST
       bearerToken: ${{ secrets.GITHUB_TOKEN }}
       data: |
