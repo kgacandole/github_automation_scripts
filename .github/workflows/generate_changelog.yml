@@ -1,0 +1,38 @@
+name: Generate Changelog
+run-name: Generate Changelog
+on:
+  workflow_dispatch:
+    inputs:
+      OWNER_NAME:
+        description: 'Owner Name'
+        type: string
+        required: false
+      REPOSITORY_NAME:
+        description: 'Repository Name'
+        type: string
+        required: false
+
+jobs:
+  generate-changelog:
+    name: Create Repository Variables
+    runs-on: [ubuntu-latest]
+    env:
+      GH_TOKEN: ${{ secrets.GH_TOKEN }}
+      PYTHON_VERSION: '3.10'
+    steps:
+    - name: Checkout CICD repository
+      uses: actions/checkout@v4
+      with:
+        repository: kgacandole/github_automation_scripts
+        ref: main
+        path: scripts
+        token: ${{ env.GH_TOKEN }}
+    
+    - name: Setup Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+
+    - name: Create Repository Variables
+      shell: bash
+      run: python scripts/generate_changelog.py ${{ inputs.OWNER_NAME }} ${{ inputs.REPOSITORY_NAME }}
