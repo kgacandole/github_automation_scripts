@@ -1,0 +1,47 @@
+name: Create Repository Variables
+run-name: Create Repository Variables
+on:
+  workflow_dispatch:
+    inputs:
+      OWNER_NAME:
+        description: 'Owner Name'
+        type: string
+        required: false
+      REPOSITORY_NAME:
+        description: 'Repository Name'
+        type: string
+        required: false
+      VARIABLE_NAME:
+        description: 'Variable Name'
+        type: string
+        required: false
+      VARIABLE_VALUE:
+        description: 'Variable Value'
+        type: string
+        required: false
+
+jobs:
+  create-vars:
+    name: Create Repository Variables
+    runs-on: [ubuntu-latest]
+    env:
+      GH_TOKEN: ${{ secrets.GH_TOKEN }}
+    steps:
+    - name: Create Repository Variables
+      id: create-repo-vars
+      uses: fjogeleit/http-request-action@v1
+      with:
+        url: https://api.github.com/repos/${{ inputs.OWNER_NAME }}/${{ inputs.REPOSITORY_NAME }}/actions/variables
+        method: POST
+        bearerToken: ${{ secrets.GH_TOKEN }}
+        data: |
+          {
+            "name": "${{ inputs.VARIABLE_NAME }}",
+            "value": "${{ inputs.VARIABLE_VALUE }}"
+          }
+        ignoreStatusCodes: '409'
+        customHeaders: |
+          {
+            "Accept": "application/vnd.github+json"
+            "X-GitHub-Api-Version" : "2022-11-28"
+          }
