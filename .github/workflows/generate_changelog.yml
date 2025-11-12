@@ -14,13 +14,13 @@ on:
 
 jobs:
   generate-changelog:
-    name: Create Repository Variables
+    name: Generate Changelog
     runs-on: [ubuntu-latest]
     env:
       GH_TOKEN: ${{ secrets.GH_TOKEN }}
       PYTHON_VERSION: '3.10'
     steps:
-    - name: Checkout CICD repository
+    - name: Checkout Repository
       uses: actions/checkout@v4
       with:
         repository: kgacandole/github_automation_scripts
@@ -33,6 +33,6 @@ jobs:
       with:
         python-version: ${{ env.PYTHON_VERSION }}
 
-    - name: Create Repository Variables
+    - name: Generate Changelog
       shell: bash
-      run: python scripts/generate_changelog.py ${{ inputs.OWNER_NAME }} ${{ inputs.REPOSITORY_NAME }}
+      run: python scripts/python/generate_changelog.py ${{ inputs.OWNER_NAME }} ${{ inputs.REPOSITORY_NAME }}
