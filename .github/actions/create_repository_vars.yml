@@ -1,0 +1,42 @@
+name: Create Repository variables
+description: Create Repository Variables
+inputs:
+  repository_name:
+    description: 'The name of the repository'
+    required: true
+  variable_name:
+    description: 'Name of Environment Variable'
+    required: true
+    default: ''
+  variable_value:
+    description: 'Value of Environment Variable'
+    required: true
+    default: ''
+  
+outputs:
+  response:
+    value: ${{ steps.create-repo-vars.outputs.response }}
+  status:
+    value: ${{ steps.create-repo-vars.outputs.status }}
+    
+runs:
+  using: "composite"
+  steps:
+  - name: Create Repository Variables
+    id: create-repo-vars
+    uses: fjogeleit/http-request-action@v1
+    with:
+      url: repos/LouisVuitton/${{ inputs.repository_name }}/actions/variables
+      method: POST
+      bearerToken: ${{ secrets.GITHUB_TOKEN }}
+      data: |
+        {
+          "name": "${{ inputs.variable_name }}",
+          "value": "${{ inputs.variable_value }}"
+        }
+      ignoreStatusCodes: '409'
+      customHeaders: |
+        {
+          "Accept": "application/vnd.github+json"
+          "X-GitHub-Api-Version" : "2022-11-28"
+        }
