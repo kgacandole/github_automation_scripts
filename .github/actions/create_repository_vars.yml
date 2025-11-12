@@ -1,6 +1,9 @@
 name: Create Repository variables
 description: Create Repository Variables
 inputs:
+  owner_name:
+    description: 'Owner name'
+    required: true
   repository_name:
     description: 'The name of the repository'
     required: true
@@ -26,7 +29,7 @@ runs:
     id: create-repo-vars
     uses: fjogeleit/http-request-action@v1
     with:
-      url: repos/LouisVuitton/${{ inputs.repository_name }}/actions/variables
+      url: repos/${{ inputs.owner }}/${{ inputs.repository_name }}/actions/variables
       method: POST
       bearerToken: ${{ secrets.GITHUB_TOKEN }}
       data: |
