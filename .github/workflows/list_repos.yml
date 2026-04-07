@@ -7,10 +7,6 @@ on:
         description: "Key words to be included in the search (separate by comma if multiple)"
         required: false
         type: string
-      SKIP_STRINGS:
-        description: "Key words to be excluded in the search (separate by comma if multiple)"
-        required: false
-        type: string
 
 jobs:
   list-repos:
@@ -37,7 +33,7 @@ jobs:
       shell: bash
       run: |
         pip install requests
-        python scripts/python/list_repositories.py "${{ env.GH_TOKEN }}" "100" "${{ inputs.SEARCH_STRINGS }}" "${{ inputs.SKIP_STRINGS }}" "${{ env.OWNER_NAME }}"
+        python scripts/python/list_repositories.py "${{ env.GH_TOKEN }}" "${{ env.OWNER_NAME }}" "100" "${{ inputs.SEARCH_STRINGS }}"
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v4
