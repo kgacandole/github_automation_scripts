@@ -16,16 +16,17 @@ jobs:
   generate-changelog:
     name: Generate Changelog
     runs-on: [ubuntu-latest]
-    env:
-      GH_TOKEN: ${{ secrets.GH_TOKEN }}
     steps:
+    - name: Generate GH Token
+      uses: kgacandole/github_automation_scripts/.github/actions/generateGithubToken@main
+
     - name: Checkout Repository
       uses: actions/checkout@v4
       with:
         repository: kgacandole/github_automation_scripts
         ref: main
         path: scripts
-        token: ${{ env.GH_TOKEN }}
+        token: ${{ env.GITHUB_TOKEN }}
     
     - name: Setup Python
       uses: actions/setup-python@v6

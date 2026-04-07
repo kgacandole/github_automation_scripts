@@ -32,6 +32,6 @@ runs:
       url: "https://api.github.com/${{ inputs.uriPath }}"
       method: '${{ inputs.method }}'
       customHeaders: '{"Accept": "application/vnd.github+json","X-GitHub-Api-Version":"2022-11-28"}'
-      bearerToken: ${{ env.GH_TOKEN }}
+      bearerToken: ${{ env.GITHUB_TOKEN }}
       ignoreStatusCodes: ${{ inputs.ignoreHttpStatus }}
       data: ${{ inputs.data }}
