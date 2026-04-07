@@ -9,7 +9,7 @@ ownerName = sys.argv[5]
 ghUrl = "https://api.github.com/orgs/" + ownerName + "/repos"
 ghHeaders = { 
     "Authorization": "Bearer " + tokenId, 
-    "X-GitHub-Api-Version": "2022-11-28", 
+    "X-GitHub-Api-Version": "2026-03-10", 
     "Accept": "application/vnd.github+json"
 }
 
