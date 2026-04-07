@@ -36,3 +36,9 @@ jobs:
     - name: List Repositories
       shell: bash
       run: python scripts/python/list_repositories.py "${{ env.GH_TOKEN }}" "100" "${{ inputs.SEARCH_STRINGS }}" "${{ inputs.SKIP_STRINGS }}" "${{ env.OWNER_NAME }}"
+
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: "repository_list"
+        path: "repo_list.txt"

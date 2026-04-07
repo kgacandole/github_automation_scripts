@@ -13,7 +13,7 @@ ghHeaders = {
     "Accept": "application/vnd.github+json"
 }
 
-for x in range(counter):
+for x in range(maxCounter):
     url = ghUrl + "?per_page=" + maxCounter + "&page=" + str(x)
     getRepos = requests.get(url, headers = ghHeaders).json()
 
