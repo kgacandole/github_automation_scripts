@@ -46,7 +46,7 @@ jobs:
           }
     
     - name: Check response
-      bash: shell
+      shell: bash
       run: echo '${{ steps.create-tag.outputs.status }}'
     
     - name: Print Response
