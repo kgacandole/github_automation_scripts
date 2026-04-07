@@ -2,11 +2,7 @@ name: Create Tag
 run-name: Create Tag - ${{ inputs.REPOSITORY_NAME }} - ${{ inputs.TAG_NAME }}
 on:
   workflow_dispatch:
-    inputs:
-      OWNER_NAME:
-        description: 'Owner Name'
-        type: string
-        required: true
+    inputs:      
       REPOSITORY_NAME:
         description: 'Repository Name'
         type: string
@@ -24,13 +20,13 @@ jobs:
     runs-on: [ubuntu-latest]
     env:
       GH_TOKEN: ${{ secrets.GH_TOKEN }}
-      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+      OWNER_NAME: kgacandole
     steps:
     - name: Get Commit Sha
       id: sha
       uses: kgacandole/github_automation_scripts/.github/actions/invokeGithubApi@main
       with:
-        uriPath: "repos/${{ inputs.OWNER_NAME }}/${{ inputs.REPOSITORY_NAME }}/commits/${{ inputs.BRANCH_NAME }}"
+        uriPath: "repos/${{ env.OWNER_NAME }}/${{ inputs.REPOSITORY_NAME }}/commits/${{ inputs.BRANCH_NAME }}"
         method: "GET"
     
     - name: Create Tag
@@ -38,7 +34,7 @@ jobs:
       id: create-tag
       uses: kgacandole/github_automation_scripts/.github/actions/invokeGithubApi@main
       with:
-        uriPath: "repos/${{ inputs.OWNER_NAME }}/${{ inputs.REPOSITORY_NAME }}/git/refs"
+        uriPath: "repos/${{ env.OWNER_NAME }}/${{ inputs.REPOSITORY_NAME }}/git/refs"
         method: "POST"
         data: |
           {

@@ -3,10 +3,6 @@ run-name: Create Repository Variables - ${{ inputs.REPOSITORY_NAME }} - ${{ inpu
 on:
   workflow_dispatch:
     inputs:
-      OWNER_NAME:
-        description: 'Owner Name'
-        type: string
-        required: false
       REPOSITORY_NAME:
         description: 'Repository Name'
         type: string
@@ -26,16 +22,17 @@ jobs:
     runs-on: [ubuntu-latest]
     env:
       GH_TOKEN: ${{ secrets.GH_TOKEN }}
+      OWNER_NAME: kgacandole
     steps:
     - name: Create Repository Variables
       id: create-repo-vars
       uses: kgacandole/github_automation_scripts/.github/actions/invokeGithubApi@main
       with:
-        url: "repos/${{ inputs.OWNER_NAME }}/${{ inputs.REPOSITORY_NAME }}/actions/variables"
+        uriPath: "repos/${{ env.OWNER_NAME }}/${{ inputs.REPOSITORY_NAME }}/actions/variables"
         method: "POST"
         data: |
           {
             "name": "${{ inputs.VARIABLE_NAME }}",
             "value": "${{ inputs.VARIABLE_VALUE }}"
           }
-        ignoreStatusCodes: '409'
+        ignoreHttpStatus: '409'
