@@ -18,6 +18,9 @@ outputs:
   response:
     description: 'Request response'
     value: ${{ steps.req.outputs.response }}
+  status:
+    description: 'Status of API call'
+    value: ${{ steps.req.outputs.status }}
 
 runs:
   using: "composite"
