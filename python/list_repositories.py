@@ -16,8 +16,9 @@ ghHeaders = {
 for x in range(maxCounter):
     url = ghUrl + "?per_page=" + str(maxCounter) + "&page=" + str(x)
     getRepos = requests.get(url, headers = ghHeaders).json()
-
+    print(getRepos)
     for repos in getRepos:
+        print(repos)
         reponame = repos['name']
 
         if search_strings != "":        
