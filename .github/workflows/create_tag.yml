@@ -1,5 +1,5 @@
 name: Create Tag
-run-name: Create Tag
+run-name: Create Tag - ${{ inputs.REPOSITORY_NAME }} - ${{ inputs.TAG_NAME }}
 on:
   workflow_dispatch:
     inputs:
