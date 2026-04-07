@@ -2,14 +2,15 @@ name: List All Repositories
 run-name: List All Repositories
 on:
   workflow_dispatch:
-    SEARCH_STRINGS:
-      description: "Key words to be included in the search (separate by comma if multiple)"
-      required: false
-      type: string
-    SKIP_STRINGS:
-      description: "Key words to be excluded in the search (separate by comma if multiple)"
-      required: false
-      type: string
+    inputs:
+      SEARCH_STRINGS:
+        description: "Key words to be included in the search (separate by comma if multiple)"
+        required: false
+        type: string
+      SKIP_STRINGS:
+        description: "Key words to be excluded in the search (separate by comma if multiple)"
+        required: false
+        type: string
 
 jobs:
   list-repos:
