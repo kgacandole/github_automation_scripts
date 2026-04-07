@@ -1,0 +1,33 @@
+name: Github HTTP Request
+description: Github HTTP Request
+inputs:
+  uriPath:
+    description: 'Uri path for the request'
+    type: string
+  method:
+    description: 'Method to use in the request'
+    type: string
+  ignoreHttpStatus:
+    description: 'List of status codes to ignore'
+    type: string
+  data:
+    description: 'Payload to pass in the request'
+    type: string
+
+outputs:
+  response:
+    description: 'Request response'
+    value: ${{ steps.gh-request.outputs.response }}
+
+runs:
+  using: "composite"
+  steps:
+  - name: Call Github API
+    uses: fjogeleit/http-request-action@v1
+    with:
+      url: "https://api.github.com/${{ inputs.uriPath }}"
+      method: '${{ inputs.method }}'
+      headers: '{"Accept": "application/vnd.github+json","X-GitHub-Api-Version":"2022-11-28"}'
+      token: ${{ env.GH_TOKEN }}
+      ignoreHttpStatus: ${{ inputs.ignoreHttpStatus }}
+      data: ${{ inputs.data }}
