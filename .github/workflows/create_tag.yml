@@ -45,6 +45,10 @@ jobs:
             "sha": "${{ fromJson(steps.sha.outputs.response).sha }}"
           }
     
+    - name: Check response
+      bash: shell
+      run: echo '${{ steps.create-tag.outputs.status }}'
+    
     - name: Print Response
       if: steps.create-tag.outputs.status == '200'
       uses: actions/github-script@v7
