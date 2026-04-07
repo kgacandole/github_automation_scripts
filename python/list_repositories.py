@@ -1,7 +1,7 @@
 import sys, requests
 
 tokenId = sys.argv[1]
-maxCounter = sys.argv[2]
+maxCounter = int(sys.argv[2])
 search_strings = sys.argv[3]
 skip_strings = sys.argv[4]
 ownerName = sys.argv[5]
@@ -14,7 +14,7 @@ ghHeaders = {
 }
 
 for x in range(maxCounter):
-    url = ghUrl + "?per_page=" + maxCounter + "&page=" + str(x)
+    url = ghUrl + "?per_page=" + str(maxCounter) + "&page=" + str(x)
     getRepos = requests.get(url, headers = ghHeaders).json()
 
     for repos in getRepos:
