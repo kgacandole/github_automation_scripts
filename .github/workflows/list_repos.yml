@@ -28,9 +28,9 @@ jobs:
       with:
         github-token: ${{ env.GH_TOKEN }}
         script: |
-          repos = await github.rest.git.listForOrg({
+          repos = await github.rest.repos.listForOrg({
               org: "${{ inputs.OWNER_NAME }}",
               type: "${{ inputs.REPOSITORY_TYPE }}"
           });
-          
+
           console.log(repos)
