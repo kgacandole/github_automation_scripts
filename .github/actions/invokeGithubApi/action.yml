@@ -17,12 +17,13 @@ inputs:
 outputs:
   response:
     description: 'Request response'
-    value: ${{ steps.gh-request.outputs.response }}
+    value: ${{ steps.req.outputs.response }}
 
 runs:
   using: "composite"
   steps:
   - name: Call Github API
+    id: req
     uses: fjogeleit/http-request-action@v1
     with:
       url: "https://api.github.com/${{ inputs.uriPath }}"
