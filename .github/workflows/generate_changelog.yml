@@ -18,7 +18,6 @@ jobs:
     runs-on: [ubuntu-latest]
     env:
       GH_TOKEN: ${{ secrets.GH_TOKEN }}
-      PYTHON_VERSION: '3.10'
     steps:
     - name: Checkout Repository
       uses: actions/checkout@v4
@@ -29,9 +28,9 @@ jobs:
         token: ${{ env.GH_TOKEN }}
     
     - name: Setup Python
-      uses: actions/setup-python@v5
+      uses: actions/setup-python@v6
       with:
-        python-version: ${{ env.PYTHON_VERSION }}
+        python-version: ${{ vars.PYTHON_VERSION }}
 
     - name: Generate Changelog
       shell: bash
