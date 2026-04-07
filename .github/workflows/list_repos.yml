@@ -1,0 +1,36 @@
+name: List All Repositories
+run-name: List All Repositories
+on:
+  workflow_dispatch:
+    inputs:
+      OWNER_NAME:
+        description: 'Owner Name'
+        type: string
+        required: true
+        default: 'kgacandole'
+      REPOSITORY_TYPE:
+        description: 'Repository Type'
+        type: choice
+        options:
+        - all
+        - private
+        - public
+
+jobs:
+  list-repos:
+    name: List Repositories
+    runs-on: [ubuntu-latest]
+    env:
+      GH_TOKEN: ${{ secrets.GH_TOKEN }}
+    steps:
+    - name: List Repositories
+      uses: actions/github-script@v7
+      with:
+        github-token: ${{ env.GH_TOKEN }}
+        script: |
+          repos = await github.rest.git.listForOrg({
+              org: "${{ inputs.OWNER_NAME }}",
+              type: "${{ inputs.REPOSITORY_TYPE }}"
+          });
+          
+          console.log(repos)
