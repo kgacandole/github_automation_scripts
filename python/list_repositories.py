@@ -18,12 +18,16 @@ for x in range(maxCounter):
     print(url)
     getRepos = requests.get(url, headers = ghHeaders).json()
     print(getRepos)
-    for repos in getRepos:
-        print(repos)
-        reponame = repos['name']
+    print(ghHeaders)
+    try:
+        for repos in getRepos:
+            print(repos)
+            reponame = repos['name']
 
-        if search_strings != "":        
-            if any(validstr in reponame for validstr in search_strings.split(",")):
-                if skip_strings != "" and not any(excemptrepo in reponame for excemptrepo in skip_strings.split(",")):
-                    with open("repo_list.txt", "a") as f:
-                        f.write(reponame + "\n")
+            if search_strings != "":        
+                if any(validstr in reponame for validstr in search_strings.split(",")):
+                    if skip_strings != "" and not any(excemptrepo in reponame for excemptrepo in skip_strings.split(",")):
+                        with open("repo_list.txt", "a") as f:
+                            f.write(reponame + "\n")
+    except Exception as e:
+        raise RuntimeError("Unable to get repositories") from e
