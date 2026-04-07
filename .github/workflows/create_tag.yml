@@ -25,22 +25,32 @@ jobs:
     env:
       GH_TOKEN: ${{ secrets.GH_TOKEN }}
     steps:
-    - name: Create Repository Tag
-      uses: actions/github-script@v7
+    - name: Get Commit Sha
+      id: sha
+      uses: kgacandole/github_automation_scripts/.github/actions/invokeGithubApi@main
       with:
-        github-token: ${{ env.GH_TOKEN }}
-        script: |
-          // Get Branch Sha
-          ref = await github.rest.git.getRef({
-              owner: "${{ inputs.OWNER_NAME }}",
-              repo: "${{ inputs.REPOSITORY_NAME }}",
-              ref: "heads/${{ inputs.BRANCH_NAME }}"
-          });
+        uriPath: "repos/${{ inputs.OWNER_NAME }}/${{ inputs.REPOSITORY_NAME }}/commits/${{ inputs.BRANCH_NAME }}"
+        method: "GET"
+    
+    - name: Check response
+      shell: bash
+      run: echo ${{ steps.sha.outputs.response }}
+    # - name: Create Repository Tag
+    #   uses: actions/github-script@v7
+    #   with:
+    #     github-token: ${{ env.GH_TOKEN }}
+    #     script: |
+    #       // Get Branch Sha
+    #       ref = await github.rest.git.getRef({
+    #           owner: "${{ inputs.OWNER_NAME }}",
+    #           repo: "${{ inputs.REPOSITORY_NAME }}",
+    #           ref: "heads/${{ inputs.BRANCH_NAME }}"
+    #       });
 
-          // Create Tag
-          await github.rest.git.createRef({
-              owner: '${{ inputs.OWNER_NAME }}',
-              repo: '${{ inputs.REPOSITORY_NAME }}',
-              ref: 'refs/tags/${{ inputs.TAG_NAME }}',
-              sha: ref.data.object.sha
-          })
+    #       // Create Tag
+    #       await github.rest.git.createRef({
+    #           owner: '${{ inputs.OWNER_NAME }}',
+    #           repo: '${{ inputs.REPOSITORY_NAME }}',
+    #           ref: 'refs/tags/${{ inputs.TAG_NAME }}',
+    #           sha: ref.data.object.sha
+    #       })
