@@ -15,6 +15,7 @@ ghHeaders = {
 
 for x in range(maxCounter):
     url = ghUrl + "?per_page=" + str(maxCounter) + "&page=" + str(x)
+    print(url)
     getRepos = requests.get(url, headers = ghHeaders).json()
     print(getRepos)
     for repos in getRepos:
