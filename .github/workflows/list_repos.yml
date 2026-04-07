@@ -15,18 +15,8 @@ jobs:
     env:
       OWNER_NAME: kgacandole
     steps:
-    - uses: actions/create-github-app-token@v3
-      id: gh-app-token
-      with:
-        app-id: ${{ secrets.GH_APP_ID }}
-        private-key: ${{ secrets.GH_APP_PRIVATE_KEY }}
-        owner: kgacandole
-        skip-token-revoke: true
-    
-    - name: Set Env Var
-      uses: actions/github-script@v7
-      with:
-        script: core.exportVariable("GH_TOKEN", "${{ steps.gh-app-token.outputs.token }}")
+    - name: Generate GH Token
+      uses: kgacandole/github_automation_scripts/.github/actions/generateGithubToken@main
 
     - name: Checkout Repository
       uses: actions/checkout@v4
@@ -34,7 +24,7 @@ jobs:
         repository: kgacandole/github_automation_scripts
         ref: main
         path: scripts
-        token: ${{ env.GH_TOKEN }}
+        token: ${{ env.GITHUB_TOKEN }}
     
     - name: Setup Python
       uses: actions/setup-python@v6
@@ -45,7 +35,7 @@ jobs:
       shell: bash
       run: |
         pip install requests
-        python scripts/python/list_repositories.py "${{ env.GH_TOKEN }}" "${{ env.OWNER_NAME }}" "100" "${{ inputs.SEARCH_STRINGS }}"
+        python scripts/python/list_repositories.py "${{ env.GITHUB_TOKEN }}" "${{ env.OWNER_NAME }}" "100" "${{ inputs.SEARCH_STRINGS }}"
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v4
