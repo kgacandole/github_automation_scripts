@@ -20,11 +20,12 @@ runs:
     uses: actions/github-script@v7
     with:
       script: |
+        var getVarsUrl = "repos/${{ env.OWNER_NAME }}/${{ inputs.repositoryName }}/actions"
         if("${{ inputs.IS_SECRET }}" == "true"){
-          getVarsUrl = "repos/${{ env.OWNER_NAME }}/${{ inputs.repositoryName }}/secrets"
+          getVarsUrl = getVarsUrl + "/secrets"
         }
         else {
-          getVarsUrl = "repos/${{ env.OWNER_NAME }}/${{ inputs.repositoryName }}/variables"
+          getVarsUrl = getVarsUrl + "variables"
         }
         core.setOutput("getVarsUrl", getVarsUrl)
 
