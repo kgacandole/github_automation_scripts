@@ -16,7 +16,7 @@ inputs:
   maskResponse:
     description: 'Flag if masking response is required'
     type: string
-    default: false
+    default: 'false'
 
 outputs:
   response:
