@@ -37,6 +37,18 @@ runs:
       method: "GET"
       maskResponse: "true"
   
-  - name: Check Response
-    shell: bash
-    run: echo '${{ steps.get-var.outputs.response }}'
+  - name: Extract Vars
+    id: var-details
+    uses: cloudposse/github-action-jq@main
+    with:
+      compact: true
+      input: '${{ steps.get-var.outputs.response }}'
+      raw-output: true
+      script: |-
+        .secrets | .[] | select(.name == "${{ inputs.variableName }}") | .name
+  
+  - name: Check if Vars Exist
+    if: steps.var-details.outputs.output != ''
+    uses: actions/github-script@v7
+    with:
+      script: core.setFailed("Variable already exists. Please select force update if you want to proceed.")
