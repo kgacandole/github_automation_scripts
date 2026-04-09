@@ -39,6 +39,7 @@ runs:
   
   - name: Extract Secret Vars
     id: secret-details
+    if: inputs.isSecret == 'true'
     uses: cloudposse/github-action-jq@main
     with:
       compact: true
@@ -49,6 +50,7 @@ runs:
   
   - name: Extract Vars
     id: var-details
+    if: inputs.isSecret == 'false'
     uses: cloudposse/github-action-jq@main
     with:
       compact: true
