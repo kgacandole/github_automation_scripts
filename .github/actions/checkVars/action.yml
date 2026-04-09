@@ -1,0 +1,41 @@
+name: Check Repository Vars
+description: Check Repository Vars
+inputs:
+  repositoryName:
+    description: 'Repository Name where variable needs to be checked'
+    type: string
+  variableName:
+    description: 'Variable name to be checked'
+    type: string
+  isSecret:
+    description: 'Flag if variable is a secret'
+    type: string
+    default: 'false'
+
+runs:
+  using: "composite"
+  steps:  
+  - name: Identify URL
+    id: url
+    uses: actions/github-script@v7
+    with:
+      script: |
+        if("${{ inputs.IS_SECRET }}" == "true"){
+          getVarsUrl = "repos/${{ env.OWNER_NAME }}/${{ inputs.repositoryName }}/secrets"
+        }
+        else {
+          getVarsUrl = "repos/${{ env.OWNER_NAME }}/${{ inputs.repositoryName }}/variables"
+        }
+        core.setOutput("getVarsUrl", getVarsUrl)
+
+  - name: Get Var
+    id: get-var
+    uses: kgacandole/github_automation_scripts/.github/actions/invokeGithubApi@main
+    with:
+      uriPath: "${{ steps.url.outputs.getVarsUrl }}"
+      method: "GET"
+      maskResponse: "true"
+  
+  - name: Check Response
+    shell: bash
+    run: echo '${{ steps.get-var.outputs.response }}'
