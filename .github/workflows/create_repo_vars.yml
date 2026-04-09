@@ -6,15 +6,15 @@ on:
       REPOSITORY_NAME:
         description: 'Repository Name'
         type: string
-        required: false
+        required: true
       VARIABLE_NAME:
         description: 'Variable Name'
         type: string
-        required: false
+        required: true
       VARIABLE_VALUE:
         description: 'Variable Value'
         type: string
-        required: false
+        required: true
       FORCE_UPDATE:
         description: 'Force Update'
         type: boolean
