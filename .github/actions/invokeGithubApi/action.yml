@@ -13,6 +13,10 @@ inputs:
   data:
     description: 'Payload to pass in the request'
     type: string
+  maskResponse:
+    description: 'Flag if masking response is required'
+    type: string
+    default: false
 
 outputs:
   response:
@@ -35,3 +39,4 @@ runs:
       bearerToken: ${{ env.GITHUB_TOKEN }}
       ignoreStatusCodes: ${{ inputs.ignoreHttpStatus }}
       data: ${{ inputs.data }}
+      maskResponse: ${{ inputs.maskResponse }}
