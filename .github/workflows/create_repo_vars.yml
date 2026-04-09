@@ -38,6 +38,14 @@ jobs:
       with:
         repositoryName: ${{ inputs.REPOSITORY_NAME }}
         variableName: ${{ inputs.VARIABLE_NAME }}
+    
+    - name: Delete Variable
+      if: inputs.FORCE_UPDATE == true
+      uses: kgacandole/github_automation_scripts/.github/actions/invokeGithubApi@main
+      with:
+        uriPath: "repos/${{ env.OWNER_NAME }}/${{ inputs.REPOSITORY_NAME }}/actions/variables/${{ inputs.VARIABLE_NAME }}"
+        method: "DELETE"
+        ignoreHttpStatus: "404"
 
     - name: Create Repository Variables
       id: create-repo-vars
