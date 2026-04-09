@@ -15,6 +15,10 @@ on:
         description: 'Variable Value'
         type: string
         required: false
+      FORCE_UPDATE:
+        description: 'Force Update'
+        type: boolean
+        default: false
 
 jobs:
   create-vars:
@@ -29,6 +33,7 @@ jobs:
       uses: kgacandole/github_automation_scripts/.github/actions/generateGithubToken@main
     
     - name: Check Var
+      if: inputs.FORCE_UPDATE == 'false'
       uses: kgacandole/github_automation_scripts/.github/actions/checkVars@main
       with:
         repositoryName: ${{ inputs.REPOSITORY_NAME }}
