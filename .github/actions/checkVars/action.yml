@@ -66,6 +66,6 @@ runs:
       secret: ${{ env.GITHUB_TOKEN }}
       approvers: kgacandole
       minimum-approvals: 1
-      issue-title: "${{ inputs.isSecret == 'true' && Updating of Secret Variable '${{ inputs.variableName }}' || Updating of Repository Variable '${{ inputs.variableName }}'"
+      issue-title: "Updating of Variable '${{ inputs.variableName }}'"
       issue-body: "Please approve or deny this change."
       fail-on-denial: true
