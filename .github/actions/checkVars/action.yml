@@ -21,11 +21,11 @@ runs:
     with:
       script: |
         var getVarsUrl = "repos/${{ env.OWNER_NAME }}/${{ inputs.repositoryName }}/actions"
-        if("${{ inputs.IS_SECRET }}" == "true"){
+        if("${{ inputs.isSecret }}" == "true"){
           getVarsUrl = getVarsUrl + "/secrets"
         }
         else {
-          getVarsUrl = getVarsUrl + "variables"
+          getVarsUrl = getVarsUrl + "/variables"
         }
         core.setOutput("getVarsUrl", getVarsUrl)
 
